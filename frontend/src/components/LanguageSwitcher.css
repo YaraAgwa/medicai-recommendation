@@ -1,0 +1,22 @@
+.lang-switcher {
+  padding: 0.55rem 1rem;
+  border: 1.5px solid rgba(148, 163, 184, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition);
+  min-width: 58px;
+  letter-spacing: 0.03em;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.05);
+}
+
+.lang-switcher:hover {
+  border-color: var(--primary);
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  transform: translateY(-1px);
+}
