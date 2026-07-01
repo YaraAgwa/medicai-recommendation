@@ -2,7 +2,7 @@
   padding: 0.55rem 1rem;
   border: 1.5px solid rgba(148, 163, 184, 0.3);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--surface);
   color: var(--text);
   font-size: 0.85rem;
   font-weight: 700;
@@ -18,5 +18,27 @@
   border-color: var(--primary);
   color: var(--primary-dark);
   background: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(148, 163, 184, 0.3);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.05);
+}
+
+.theme-toggle:hover {
+  border-color: var(--primary);
   transform: translateY(-1px);
 }

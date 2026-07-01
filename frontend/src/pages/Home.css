@@ -25,7 +25,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: white;
+  background: var(--surface);
   border: 1px solid rgba(148, 163, 184, 0.18);
   padding: 0.45rem 1rem;
   border-radius: 999px;
@@ -76,7 +76,7 @@
   text-align: left;
   padding: 2rem;
   height: 100%;
-  background: rgba(255, 255, 255, 0.93);
+  background: var(--surface);
   border-radius: 24px;
   border: 1px solid rgba(148, 163, 184, 0.16);
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
@@ -162,7 +162,7 @@
 }
 
 .specialty-tag {
-  background: white;
+  background: var(--surface);
   border: 1px solid rgba(148, 163, 184, 0.18);
   padding: 0.75rem 1.2rem;
   border-radius: 999px;

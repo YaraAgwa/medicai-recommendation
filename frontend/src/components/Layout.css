@@ -1,5 +1,5 @@
 .header {
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--surface);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(148, 163, 184, 0.18);
@@ -148,7 +148,7 @@
   font-size: 0.95rem;
   text-decoration: none;
   border: none;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--bg-subtle);
   font-family: inherit;
   cursor: pointer;
   transition: background var(--transition);

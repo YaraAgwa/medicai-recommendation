@@ -3,6 +3,7 @@ import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import ThemeToggle from './ThemeToggle';
 import './Layout.css';
 
 export default function Layout() {
@@ -77,6 +78,7 @@ export default function Layout() {
             </nav>
 
             <div className="nav-actions">
+              <ThemeToggle />
               <LanguageSwitcher />
               <button
                 type="button"

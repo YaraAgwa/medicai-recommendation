@@ -7,7 +7,7 @@
 
 .question-main {
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--surface);
   border-radius: var(--radius);
   border: 1px solid rgba(148, 163, 184, 0.18);
   box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
@@ -48,7 +48,7 @@
 .answer-card {
   margin-bottom: 1rem;
   padding: 1.4rem 1.55rem;
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--surface);
   border-radius: var(--radius-sm);
   border: 1px solid rgba(148, 163, 184, 0.15);
   box-shadow: 0 14px 32px rgba(15, 23, 42, 0.05);
@@ -62,7 +62,7 @@
 .answer-form {
   margin-top: 1.75rem;
   padding: 1.9rem;
-  background: rgba(255, 255, 255, 0.98);
+  background: var(--surface);
   border-radius: var(--radius);
   border: 1px solid rgba(148, 163, 184, 0.18);
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
@@ -79,7 +79,7 @@
   margin-top: 1.75rem;
   padding: 2rem;
   color: var(--text-muted);
-  background: rgba(241, 245, 249, 0.92);
+  background: var(--bg-subtle);
   border-radius: var(--radius-sm);
 }
 

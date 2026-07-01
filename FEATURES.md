@@ -8,8 +8,8 @@ feature teaches a skill the next one uses. Check them off as you finish! ✅
 
 ## 🟢 Level 1 — Warm-ups (core skills)
 - [x] 1. 📅 **Appointment booking** (instant confirm) — *new collection, CRUD, forms, dates*  ✅ DONE & LIVE
-- [ ] 2. ❤️ **Save favorite doctors** — *many-to-many relationships*
-- [ ] 3. 🌙 **Dark mode** — *frontend state + localStorage*
+- [x] 2. ❤️ **Save favorite doctors** — *many-to-many relationships*  ✅ DONE & LIVE
+- [x] 3. 🌙 **Dark mode** — *frontend state + localStorage*
 - [ ] 4. 📊 **Dashboard with stats** — *aggregating/counting data*
 
 ## 🟡 Level 2 — Getting real (data & polish)
