@@ -8,6 +8,7 @@ const questionRoutes = require('./routes/questions');
 const doctorRoutes = require('./routes/doctors');
 const appointmentRoutes = require('./routes/appointments');
 const favoriteRoutes = require('./routes/favorites');
+const statsRoutes = require('./routes/stats');
 
 const app = express();
 
@@ -35,5 +36,6 @@ app.use('/api/questions', questionRoutes);
 app.use('/api/doctors', doctorRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/favorites', favoriteRoutes);
+app.use('/api/stats', statsRoutes);
 
 module.exports = app;
