@@ -15,6 +15,8 @@ async function connect() {
   await state.db.collection('questions').createIndex({ patient_id: 1 });
   await state.db.collection('answers').createIndex({ question_id: 1 });
   await state.db.collection('answers').createIndex({ user_id: 1 });
+  await state.db.collection('appointments').createIndex({ patient_id: 1 });
+  await state.db.collection('appointments').createIndex({ doctor_id: 1 });
 
   return state.db;
 }
@@ -29,6 +31,7 @@ const collections = {
   users: () => getDb().collection('users'),
   questions: () => getDb().collection('questions'),
   answers: () => getDb().collection('answers'),
+  appointments: () => getDb().collection('appointments'),
 };
 
 // Parse a string into an ObjectId, returning null when invalid (instead of throwing).
@@ -44,7 +47,7 @@ function serialize(doc) {
   if (!doc) return doc;
   const { _id, ...rest } = doc;
   const out = { id: _id ? _id.toString() : undefined, ...rest };
-  for (const key of ['patient_id', 'question_id', 'user_id']) {
+  for (const key of ['patient_id', 'question_id', 'user_id', 'doctor_id']) {
     if (out[key] instanceof ObjectId) out[key] = out[key].toString();
   }
   return out;

@@ -27,6 +27,11 @@ export default function Layout() {
       {user?.role === 'patient' && (
         <Link to="/ask" onClick={closeMenu}>{t('nav.askQuestion')}</Link>
       )}
+      {user && (
+        <Link to="/appointments" onClick={closeMenu}>
+          {t('nav.appointments', { defaultValue: 'Appointments' })}
+        </Link>
+      )}
     </>
   );
 
