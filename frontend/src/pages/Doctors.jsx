@@ -102,6 +102,7 @@ export default function Doctors() {
               <div className="doctor-stats">
                 <span>📅 {t('doctors.yrsExperience', { count: doc.experience_years })}</span>
                 <span>💬 {t('doctors.answersGiven', { count: doc.answers_given })}</span>
+                {doc.rating_count > 0 && <span>⭐ {doc.rating_avg.toFixed(1)}</span>}
               </div>
             </Link>
           ))}

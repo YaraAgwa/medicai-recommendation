@@ -13,7 +13,7 @@ feature teaches a skill the next one uses. Check them off as you finish! ✅
 - [x] 4. 📊 **Dashboard with stats** — *aggregating/counting data*
 
 ## 🟡 Level 2 — Getting real (data & polish)
-- [ ] 5. ⭐ **Ratings & reviews** — *relationships + averages*
+- [x] 5. ⭐ **Ratings & reviews** — *relationships + averages*
 - [ ] 6. 🔍 **Better search & filters** — *queries + database indexes*
 - [ ] 7. 🖼️ **Profile photos & attachments** — *file/image uploads*
 - [ ] 8. ✅ **Form validation + disclaimers** — *input safety, consent*

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { api } from '../api';
 import { useAuth } from '../context/AuthContext';
 import { translateSpecialty } from '../utils/specialties';
+import Stars from '../components/Stars';
 import './Doctors.css';
 
 export default function DoctorProfile() {
@@ -20,7 +21,38 @@ export default function DoctorProfile() {
   const [bookMsg, setBookMsg] = useState('');
   const [bookErr, setBookErr] = useState('');
 
+  // Reviews state
+  const [reviewsData, setReviewsData] = useState({ average: null, count: 0, reviews: [] });
+  const [myRating, setMyRating] = useState(0);
+  const [myComment, setMyComment] = useState('');
+  const [reviewMsg, setReviewMsg] = useState('');
+  const [savingReview, setSavingReview] = useState(false);
+
   const locale = i18n.language === 'ar' ? 'ar-SA' : 'en-US';
+
+  const loadReviews = () => {
+    api(`/reviews/doctor/${id}`).then(setReviewsData).catch(console.error);
+  };
+
+  const handleReview = async (e) => {
+    e.preventDefault();
+    if (!myRating) return;
+    setSavingReview(true);
+    setReviewMsg('');
+    try {
+      await api('/reviews', {
+        method: 'POST',
+        body: JSON.stringify({ doctor_id: id, rating: myRating, comment: myComment }),
+      });
+      setReviewMsg(t('reviews.saved', { defaultValue: 'Thanks for your review!' }));
+      loadReviews();
+      api(`/doctors/${id}`).then(setDoctor).catch(() => {});  // refresh header average
+    } catch (err) {
+      setReviewMsg(err.message);
+    } finally {
+      setSavingReview(false);
+    }
+  };
 
   const handleBook = async (e) => {
     e.preventDefault();
@@ -49,6 +81,23 @@ export default function DoctorProfile() {
       .finally(() => setLoading(false));
   }, [id, i18n.language]);
 
+  useEffect(() => {
+    loadReviews();
+  }, [id]);
+
+  useEffect(() => {
+    if (user?.role === 'patient') {
+      api(`/reviews/mine/${id}`)
+        .then((r) => {
+          if (r) {
+            setMyRating(r.rating);
+            setMyComment(r.comment || '');
+          }
+        })
+        .catch(console.error);
+    }
+  }, [id, user]);
+
   if (loading) return <div className="loading container">{t('common.loading')}</div>;
   if (!doctor) return <div className="empty-state container">{t('doctors.notFound')}</div>;
 
@@ -60,6 +109,20 @@ export default function DoctorProfile() {
         <div className="doctor-avatar">{doctor.name.charAt(0)}</div>
         <h1 className="page-title">{doctor.name}</h1>
         <span className="badge badge-doctor">{translateSpecialty(t, doctor.specialty)}</span>
+        <div style={{ marginTop: '0.75rem' }}>
+          {doctor.rating_count > 0 ? (
+            <>
+              <Stars value={doctor.rating_avg} />{' '}
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+                {doctor.rating_avg.toFixed(1)} ({doctor.rating_count})
+              </span>
+            </>
+          ) : (
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+              {t('reviews.none', { defaultValue: 'No reviews yet' })}
+            </span>
+          )}
+        </div>
         <p style={{ marginTop: '1rem', color: 'var(--text-muted)' }}>{doctor.hospital}</p>
         <p style={{ marginTop: '0.5rem', fontWeight: 500 }}>
           {t('doctors.yearsOfExperience', { count: doctor.experience_years })}
@@ -108,6 +171,71 @@ export default function DoctorProfile() {
           </Link>
         </div>
       )}
+
+      <section style={{ marginBottom: '1.5rem' }}>
+        <h2 style={{ marginBottom: '1rem', fontSize: '1.25rem', fontWeight: 700 }}>
+          {t('reviews.title', { defaultValue: 'Reviews' })}
+          {reviewsData.count > 0 && (
+            <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}> ({reviewsData.count})</span>
+          )}
+        </h2>
+
+        {user?.role === 'patient' && (
+          <form onSubmit={handleReview} className="card" style={{ padding: '1.25rem', marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: 600, fontSize: '0.875rem' }}>
+              {t('reviews.yourRating', { defaultValue: 'Your rating' })}
+            </label>
+            <div style={{ marginBottom: '0.75rem' }}>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => setMyRating(n)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '1.7rem',
+                    padding: '0 2px',
+                    color: n <= myRating ? '#f59e0b' : 'var(--border)',
+                  }}
+                  aria-label={`${n} star`}
+                >
+                  ★
+                </button>
+              ))}
+            </div>
+            <div className="form-group">
+              <textarea
+                value={myComment}
+                onChange={(e) => setMyComment(e.target.value)}
+                placeholder={t('reviews.commentPlaceholder', { defaultValue: 'Share your experience (optional)' })}
+              />
+            </div>
+            {reviewMsg && <div className="success-msg">{reviewMsg}</div>}
+            <button type="submit" className="btn btn-patient" disabled={savingReview || !myRating}>
+              {savingReview
+                ? t('reviews.saving', { defaultValue: 'Saving...' })
+                : t('reviews.submit', { defaultValue: 'Submit Review' })}
+            </button>
+          </form>
+        )}
+
+        {reviewsData.reviews.length === 0 ? (
+          <div className="empty-state">{t('reviews.none', { defaultValue: 'No reviews yet' })}</div>
+        ) : (
+          reviewsData.reviews.map((r) => (
+            <div key={r.id} className="card recent-answer-card">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <strong>{r.patient_name}</strong>
+                <Stars value={r.rating} />
+              </div>
+              {r.comment && <p className="recent-answer-preview">{r.comment}</p>}
+              <span className="date">{new Date(r.created_at).toLocaleDateString(locale)}</span>
+            </div>
+          ))
+        )}
+      </section>
 
       {doctor.recentAnswers?.length > 0 && (
         <section>

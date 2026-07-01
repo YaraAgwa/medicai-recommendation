@@ -16,8 +16,18 @@ const doctorShape = [
     },
   },
   {
+    $lookup: {
+      from: 'reviews',
+      localField: '_id',
+      foreignField: 'doctor_id',
+      as: 'reviews',
+    },
+  },
+  {
     $addFields: {
       answers_given: { $size: '$authored' },
+      rating_avg: { $avg: '$reviews.rating' },   // null when there are no reviews
+      rating_count: { $size: '$reviews' },
       specialty: '$profile.specialty',
       license_number: '$profile.license_number',
       experience_years: '$profile.experience_years',
@@ -27,7 +37,7 @@ const doctorShape = [
       hospital_ar: '$profile.hospital_ar',
     },
   },
-  { $project: { authored: 0, profile: 0, password: 0 } },
+  { $project: { authored: 0, reviews: 0, profile: 0, password: 0 } },
 ];
 
 router.get('/', async (req, res) => {
