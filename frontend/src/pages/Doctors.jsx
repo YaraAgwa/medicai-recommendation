@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { api } from '../api';
+import { useAuth } from '../context/AuthContext';
 import { translateSpecialty } from '../utils/specialties';
 import './Doctors.css';
 
@@ -11,11 +12,39 @@ export default function Doctors() {
   const [searchParams] = useSearchParams();
   const [specialty, setSpecialty] = useState(searchParams.get('specialty') || '');
   const [loading, setLoading] = useState(true);
+  const [favoriteIds, setFavoriteIds] = useState(new Set());
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
 
   useEffect(() => {
     api('/doctors/specialties').then(setSpecialties).catch(console.error);
   }, []);
+
+  // Load which doctors this patient already favorited (to fill in the hearts).
+  useEffect(() => {
+    if (user?.role === 'patient') {
+      api('/favorites/ids').then((ids) => setFavoriteIds(new Set(ids))).catch(console.error);
+    }
+  }, [user]);
+
+  const toggleFavorite = async (e, docId) => {
+    e.preventDefault();  // don't follow the card's link
+    e.stopPropagation();
+    const isFav = favoriteIds.has(docId);
+    // Update the screen immediately, then tell the server.
+    const next = new Set(favoriteIds);
+    isFav ? next.delete(docId) : next.add(docId);
+    setFavoriteIds(next);
+    try {
+      if (isFav) {
+        await api(`/favorites/${docId}`, { method: 'DELETE' });
+      } else {
+        await api('/favorites', { method: 'POST', body: JSON.stringify({ doctor_id: docId }) });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     const fromUrl = searchParams.get('specialty') || '';
@@ -54,7 +83,17 @@ export default function Doctors() {
       ) : (
         <div className="doctor-grid">
           {doctors.map((doc) => (
-            <Link key={doc.id} to={`/doctors/${doc.id}`} className="doctor-card card card-hover">
+            <Link key={doc.id} to={`/doctors/${doc.id}`} className="doctor-card card card-hover" style={{ position: 'relative' }}>
+              {user?.role === 'patient' && (
+                <button
+                  type="button"
+                  className="fav-btn"
+                  onClick={(e) => toggleFavorite(e, doc.id)}
+                  aria-label={t('favorites.toggle', { defaultValue: 'Toggle favorite' })}
+                >
+                  {favoriteIds.has(doc.id) ? '❤️' : '🤍'}
+                </button>
+              )}
               <div className="doctor-avatar">{doc.name.charAt(0)}</div>
               <h3>{doc.name}</h3>
               <span className="badge badge-doctor">{translateSpecialty(t, doc.specialty)}</span>

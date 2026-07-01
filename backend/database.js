@@ -17,6 +17,8 @@ async function connect() {
   await state.db.collection('answers').createIndex({ user_id: 1 });
   await state.db.collection('appointments').createIndex({ patient_id: 1 });
   await state.db.collection('appointments').createIndex({ doctor_id: 1 });
+  // One patient can favorite a doctor only once (prevents duplicate hearts).
+  await state.db.collection('favorites').createIndex({ patient_id: 1, doctor_id: 1 }, { unique: true });
 
   return state.db;
 }
@@ -32,6 +34,7 @@ const collections = {
   questions: () => getDb().collection('questions'),
   answers: () => getDb().collection('answers'),
   appointments: () => getDb().collection('appointments'),
+  favorites: () => getDb().collection('favorites'),
 };
 
 // Parse a string into an ObjectId, returning null when invalid (instead of throwing).

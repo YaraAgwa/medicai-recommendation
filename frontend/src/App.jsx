@@ -13,6 +13,7 @@ import DoctorProfile from './pages/DoctorProfile';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import MyAppointments from './pages/MyAppointments';
+import Favorites from './pages/Favorites';
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="appointments" element={<MyAppointments />} />
+        <Route path="favorites" element={<Favorites />} />
       </Route>
     </Routes>
   );
