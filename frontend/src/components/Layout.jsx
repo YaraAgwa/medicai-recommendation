@@ -25,6 +25,9 @@ export default function Layout() {
     <>
       <Link to="/questions" onClick={closeMenu}>{t('nav.questions')}</Link>
       <Link to="/doctors" onClick={closeMenu}>{t('nav.doctors')}</Link>
+      <Link to="/symptom-checker" onClick={closeMenu}>
+        {t('nav.symptomChecker', { defaultValue: 'AI Checker' })}
+      </Link>
       {user?.role === 'patient' && (
         <Link to="/ask" onClick={closeMenu}>{t('nav.askQuestion')}</Link>
       )}

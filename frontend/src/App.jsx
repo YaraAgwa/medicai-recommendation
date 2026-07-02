@@ -14,6 +14,7 @@ import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import MyAppointments from './pages/MyAppointments';
 import Favorites from './pages/Favorites';
+import SymptomChecker from './pages/SymptomChecker';
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="appointments" element={<MyAppointments />} />
         <Route path="favorites" element={<Favorites />} />
+        <Route path="symptom-checker" element={<SymptomChecker />} />
       </Route>
     </Routes>
   );

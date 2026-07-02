@@ -26,7 +26,7 @@ feature teaches a skill the next one uses. Check them off as you finish! ✅
 - [ ] 13. 💊 **Medication reminders** — *scheduling / cron jobs*
 - [ ] 14. 📰 **Health articles / blog** — *content, markdown, SEO*
 - [ ] 15. 💬 **Chat / messaging** — *real-time messaging*
-- [ ] 16. 🤖 **AI symptom checker** — *building with the Claude API (the big one!)*
+- [x] 16. 🤖 **AI symptom checker** — *building with the Claude API (the big one!)*
 
 ## 🔵 Level 4 — Business features (optional, later)
 - [ ] 17. 💳 **Payments** (Stripe/Paymob) — *third-party APIs + webhooks*
