@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { api } from '../api';
+import { useDebounce } from '../hooks/useDebounce';
 import { CATEGORIES, translateSpecialty } from '../utils/specialties';
 import './Questions.css';
 
@@ -12,9 +13,11 @@ export default function Questions() {
   const [loading, setLoading] = useState(true);
   const { t, i18n } = useTranslation();
 
+  const debouncedSearch = useDebounce(search); // only query after typing pauses
+
   useEffect(() => {
     const params = new URLSearchParams();
-    if (search) params.set('search', search);
+    if (debouncedSearch) params.set('search', debouncedSearch);
     if (category) params.set('category', category);
     const query = params.toString() ? `?${params}` : '';
 
@@ -23,7 +26,7 @@ export default function Questions() {
       .then(setQuestions)
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [search, category, i18n.language]);
+  }, [debouncedSearch, category, i18n.language]);
 
   const locale = i18n.language === 'ar' ? 'ar-SA' : 'en-US';
 

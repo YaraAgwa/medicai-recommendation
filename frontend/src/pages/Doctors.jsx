@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { api } from '../api';
 import { useAuth } from '../context/AuthContext';
+import { useDebounce } from '../hooks/useDebounce';
 import { translateSpecialty } from '../utils/specialties';
 import './Doctors.css';
 
@@ -11,10 +12,13 @@ export default function Doctors() {
   const [specialties, setSpecialties] = useState([]);
   const [searchParams] = useSearchParams();
   const [specialty, setSpecialty] = useState(searchParams.get('specialty') || '');
+  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [favoriteIds, setFavoriteIds] = useState(new Set());
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
+
+  const debouncedSearch = useDebounce(search);
 
   useEffect(() => {
     api('/doctors/specialties').then(setSpecialties).catch(console.error);
@@ -53,12 +57,15 @@ export default function Doctors() {
 
   useEffect(() => {
     setLoading(true);
-    const query = specialty ? `?specialty=${encodeURIComponent(specialty)}` : '';
+    const params = new URLSearchParams();
+    if (specialty) params.set('specialty', specialty);
+    if (debouncedSearch) params.set('search', debouncedSearch);
+    const query = params.toString() ? `?${params}` : '';
     api(`/doctors${query}`)
       .then(setDoctors)
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [specialty, i18n.language]);
+  }, [specialty, debouncedSearch, i18n.language]);
 
   return (
     <div className="container">
@@ -68,6 +75,12 @@ export default function Doctors() {
       </div>
 
       <div className="filters">
+        <input
+          type="search"
+          placeholder={t('doctors.searchPlaceholder', { defaultValue: 'Search doctors by name, specialty, hospital…' })}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <select value={specialty} onChange={(e) => setSpecialty(e.target.value)}>
           <option value="">{t('doctors.allSpecialties')}</option>
           {specialties.map((s) => (

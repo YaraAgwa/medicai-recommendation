@@ -14,7 +14,7 @@ feature teaches a skill the next one uses. Check them off as you finish! ✅
 
 ## 🟡 Level 2 — Getting real (data & polish)
 - [x] 5. ⭐ **Ratings & reviews** — *relationships + averages*
-- [ ] 6. 🔍 **Better search & filters** — *queries + database indexes*
+- [x] 6. 🔍 **Better search & filters** — *queries + database indexes*
 - [ ] 7. 🖼️ **Profile photos & attachments** — *file/image uploads*
 - [ ] 8. ✅ **Form validation + disclaimers** — *input safety, consent*
 - [ ] 9. ✓ **Doctor verification badge** — *uploads + admin approval flow*

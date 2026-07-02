@@ -12,6 +12,10 @@ async function connect() {
   state.db = client.db(dbName);
 
   await state.db.collection('users').createIndex({ email: 1 }, { unique: true });
+  // Speed up the doctor-directory filters (role + specialty).
+  await state.db.collection('users').createIndex({ role: 1, 'profile.specialty': 1 });
+  // Speed up filtering questions by category.
+  await state.db.collection('questions').createIndex({ category: 1 });
   await state.db.collection('questions').createIndex({ patient_id: 1 });
   await state.db.collection('answers').createIndex({ question_id: 1 });
   await state.db.collection('answers').createIndex({ user_id: 1 });

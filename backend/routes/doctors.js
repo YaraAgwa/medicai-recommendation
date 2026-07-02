@@ -4,6 +4,10 @@ const { getLang, localizeAnswer, localizeDoctor } = require('../utils/localize')
 
 const router = express.Router();
 
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 // Flatten the embedded doctor `profile` onto the top-level document and attach
 // an `answers_given` count, matching the shape the frontend expects.
 const doctorShape = [
@@ -42,10 +46,22 @@ const doctorShape = [
 
 router.get('/', async (req, res) => {
   const lang = getLang(req);
-  const { specialty } = req.query;
+  const { specialty, search } = req.query;
 
   const match = { role: 'doctor' };
   if (specialty) match['profile.specialty'] = specialty;
+  if (search) {
+    // Case-insensitive "contains" search across the doctor's key fields.
+    const rx = new RegExp(escapeRegex(search), 'i');
+    match.$or = [
+      { name: rx },
+      { 'profile.specialty': rx },
+      { 'profile.hospital': rx },
+      { 'profile.hospital_ar': rx },
+      { 'profile.bio': rx },
+      { 'profile.bio_ar': rx },
+    ];
+  }
 
   const doctors = await collections.users().aggregate([
     { $match: match },
