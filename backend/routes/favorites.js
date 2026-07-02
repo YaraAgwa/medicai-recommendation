@@ -23,6 +23,7 @@ router.get('/', async (req, res) => {
         _id: '$doctor._id',
         name: '$doctor.name',
         email: '$doctor.email',
+        avatar: '$doctor.avatar',
         specialty: '$doctor.profile.specialty',
         experience_years: '$doctor.profile.experience_years',
         bio: '$doctor.profile.bio',

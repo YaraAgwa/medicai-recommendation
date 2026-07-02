@@ -11,6 +11,7 @@ function serializeUser(user) {
     role: user.role,
     name: user.name,
     created_at: user.created_at,
+    avatar: user.avatar || null,
     profile: user.profile || null,
   };
 }
@@ -27,10 +28,23 @@ router.put('/me', authMiddleware, async (req, res) => {
   const _id = toObjectId(req.user.id);
   if (!_id) return res.status(404).json({ error: 'User not found' });
 
-  const { name, ...profileData } = req.body;
+  const { name, avatar, ...profileData } = req.body;
   const set = {};
 
   if (name) set.name = name;
+
+  // Avatar is a small base64 image (data URL). Guard its size so nobody can
+  // stuff a huge file into the database. Empty/null removes the photo.
+  if (avatar !== undefined) {
+    if (typeof avatar === 'string' && avatar.startsWith('data:image/')) {
+      if (avatar.length > 400000) {
+        return res.status(400).json({ error: 'Image too large' });
+      }
+      set.avatar = avatar;
+    } else if (avatar === null || avatar === '') {
+      set.avatar = null;
+    }
+  }
 
   if (req.user.role === 'patient') {
     const { age, gender, medical_history, phone } = profileData;

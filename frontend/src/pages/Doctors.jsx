@@ -5,6 +5,7 @@ import { api } from '../api';
 import { useAuth } from '../context/AuthContext';
 import { useDebounce } from '../hooks/useDebounce';
 import { translateSpecialty } from '../utils/specialties';
+import Avatar from '../components/Avatar';
 import './Doctors.css';
 
 export default function Doctors() {
@@ -107,7 +108,7 @@ export default function Doctors() {
                   {favoriteIds.has(doc.id) ? '❤️' : '🤍'}
                 </button>
               )}
-              <div className="doctor-avatar">{doc.name.charAt(0)}</div>
+              <Avatar src={doc.avatar} name={doc.name} />
               <h3>{doc.name}</h3>
               <span className="badge badge-doctor">{translateSpecialty(t, doc.specialty)}</span>
               <p className="doctor-hospital">{doc.hospital}</p>

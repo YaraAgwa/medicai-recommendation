@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { api } from '../api';
 import { useAuth } from '../context/AuthContext';
 import { translateSpecialty } from '../utils/specialties';
+import Avatar from '../components/Avatar';
 import './Doctors.css';
 
 export default function Favorites() {
@@ -54,7 +55,7 @@ export default function Favorites() {
               >
                 ❤️
               </button>
-              <div className="doctor-avatar">{doc.name.charAt(0)}</div>
+              <Avatar src={doc.avatar} name={doc.name} />
               <h3>{doc.name}</h3>
               <span className="badge badge-doctor">{translateSpecialty(t, doc.specialty)}</span>
               <p className="doctor-hospital">{doc.hospital}</p>

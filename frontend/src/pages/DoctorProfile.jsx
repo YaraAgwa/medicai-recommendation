@@ -5,6 +5,7 @@ import { api } from '../api';
 import { useAuth } from '../context/AuthContext';
 import { translateSpecialty } from '../utils/specialties';
 import Stars from '../components/Stars';
+import Avatar from '../components/Avatar';
 import './Doctors.css';
 
 export default function DoctorProfile() {
@@ -106,7 +107,7 @@ export default function DoctorProfile() {
       <Link to="/doctors" className="back-link">{t('doctors.backToDoctors')}</Link>
 
       <div className="card doctor-profile-header">
-        <div className="doctor-avatar">{doctor.name.charAt(0)}</div>
+        <Avatar src={doctor.avatar} name={doctor.name} />
         <h1 className="page-title">{doctor.name}</h1>
         <span className="badge badge-doctor">{translateSpecialty(t, doctor.specialty)}</span>
         <div style={{ marginTop: '0.75rem' }}>
