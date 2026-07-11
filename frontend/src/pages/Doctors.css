@@ -24,7 +24,7 @@
   top: 0;
   inset-inline: 0;
   height: 5px;
-  background: linear-gradient(90deg, var(--doctor) 0%, #38bdf8 100%);
+  background: linear-gradient(90deg, var(--doctor) 0%, #fb7185 100%);
 }
 
 .doctor-card:hover {
@@ -32,7 +32,7 @@
   color: inherit;
   transform: translateY(-4px);
   box-shadow: 0 28px 75px rgba(15, 23, 42, 0.12);
-  border-color: rgba(79, 70, 229, 0.25);
+  border-color: rgba(249, 115, 22, 0.25);
 }
 
 .fav-btn {
@@ -61,7 +61,7 @@
   width: 76px;
   height: 76px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--doctor-light) 0%, #bae6fd 100%);
+  background: linear-gradient(135deg, var(--doctor-light) 0%, #fecdd3 100%);
   color: var(--doctor);
   display: flex;
   align-items: center;
