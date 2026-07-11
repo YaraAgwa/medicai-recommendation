@@ -1,23 +1,23 @@
 :root {
-  --primary: #0d9488;
-  --primary-dark: #0f766e;
-  --primary-light: #ccfbf1;
-  --primary-glow: rgba(13, 148, 136, 0.18);
-  --doctor: #2563eb;
-  --doctor-dark: #1d4ed8;
-  --doctor-light: #dbeafe;
-  --patient: #7c3aed;
-  --patient-dark: #6d28d9;
-  --patient-light: #ede9fe;
-  --bg: #f4f7fb;
-  --bg-subtle: #e9eef6;
+  --primary: #4f46e5;
+  --primary-dark: #4338ca;
+  --primary-light: #e0e7ff;
+  --primary-glow: rgba(79, 70, 229, 0.18);
+  --doctor: #0284c7;
+  --doctor-dark: #0369a1;
+  --doctor-light: #e0f2fe;
+  --patient: #9333ea;
+  --patient-dark: #7e22ce;
+  --patient-light: #f3e8ff;
+  --bg: #f6f7fc;
+  --bg-subtle: #eceefb;
   --surface: #ffffff;
   --text: #0f172a;
   --text-muted: #64748b;
-  --border: #dbe4ee;
+  --border: #e2e8f0;
   --border-light: #f1f5f9;
-  --danger: #dc2626;
-  --success: #059669;
+  --danger: #ef4444;
+  --success: #10b981;
   --success-bg: #ecfdf5;
   --radius: 18px;
   --radius-sm: 12px;
@@ -33,17 +33,19 @@
 /* Dark mode: same variable names, darker values. Anything using these
    variables switches automatically when data-theme="dark" is on <html>. */
 [data-theme="dark"] {
-  --primary-light: #134e4a;
-  --doctor-light: #1e3a5f;
-  --patient-light: #3b2f63;
-  --bg: #0b1220;
-  --bg-subtle: #0f172a;
-  --surface: #1e293b;
-  --text: #e2e8f0;
+  --primary: #818cf8;
+  --primary-dark: #6366f1;
+  --primary-light: #312e81;
+  --doctor-light: #0c4a6e;
+  --patient-light: #4c1d95;
+  --bg: #0a0f1f;
+  --bg-subtle: #111a2e;
+  --surface: #161f33;
+  --text: #e6ebf4;
   --text-muted: #94a3b8;
-  --border: #334155;
-  --border-light: #1e293b;
-  --success-bg: #064e3b;
+  --border: #29354e;
+  --border-light: #161f33;
+  --success-bg: #06281f;
 }
 
 * {
@@ -127,18 +129,18 @@ img, svg {
 .btn-primary {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
-  box-shadow: 0 18px 42px rgba(13, 148, 136, 0.18);
+  box-shadow: 0 18px 42px rgba(79, 70, 229, 0.18);
 }
 
 .btn-primary:hover {
   color: white;
-  box-shadow: 0 22px 48px rgba(13, 148, 136, 0.22);
+  box-shadow: 0 22px 48px rgba(79, 70, 229, 0.22);
 }
 
 .btn-doctor {
   background: linear-gradient(135deg, var(--doctor) 0%, var(--doctor-dark) 100%);
   color: white;
-  box-shadow: 0 18px 42px rgba(37, 99, 235, 0.18);
+  box-shadow: 0 18px 42px rgba(2, 132, 199, 0.18);
 }
 
 .btn-doctor:hover {
@@ -148,7 +150,7 @@ img, svg {
 .btn-patient {
   background: linear-gradient(135deg, var(--patient) 0%, var(--patient-dark) 100%);
   color: white;
-  box-shadow: 0 18px 42px rgba(124, 58, 237, 0.18);
+  box-shadow: 0 18px 42px rgba(147, 51, 234, 0.18);
 }
 
 .btn-patient:hover {
